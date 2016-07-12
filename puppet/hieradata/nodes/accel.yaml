@@ -1,0 +1,21 @@
+classes:
+ - nginx
+
+nginx::nginx_upstreams:
+  mytardis:
+    members:
+      - docker:8000
+  mytardis-static:
+    members:
+      - docker:80
+
+nginx::nginx_vhosts:
+  mytardis.science.uwa.edu.au:
+    listen_port: 8080
+    listen_options: default
+    proxy: 'http://mytardis'
+    proxy_set_header:
+      - 'Host $host'
+      - 'X-Real-IP $remote_addr'
+      - 'X-Forwarded-For $proxy_add_x_forwarded_for'
+      - 'X-Forwarded-Proto $scheme'

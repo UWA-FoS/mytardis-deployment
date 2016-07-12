@@ -1,0 +1,11 @@
+classes:
+ - docker
+ - docker::compose
+
+docker::storage_driver: "devicemapper"
+docker::dm_thinpooldev: "/dev/mapper/docker-thinpool"
+docker::dm_use_deferred_removal: true
+docker::docker_users:
+ - vagrant
+
+docker::compose::version: "1.7.1"

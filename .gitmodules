@@ -1,0 +1,3 @@
+[submodule "mytardis/app/src"]
+	path = mytardis/app/src
+	url = https://github.com/mytardis/mytardis.git

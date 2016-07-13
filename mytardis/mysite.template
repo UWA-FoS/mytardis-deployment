@@ -3,7 +3,11 @@ server {
   server_name ${NGINX_HOST};
 
   location / {
-    alias /srv/;
+    sendfile on;
+    sendfile_max_chunk 1m;
+    tcp_nopush on;
+
+    root /srv;
     autoindex on;
   }
 }

@@ -85,6 +85,8 @@ SCRIPT
 cd /etc/puppet/modules
 puppet module install garethr-docker
 SCRIPT
+    # TODO: Add this script to Puppet manifest
+    docker.vm.provision "docker_volume_netshare", type: "shell", path: "bin/docker-volume-netshare.sh"
     docker.vm.provision "puppet", type: "puppet"
   end
 

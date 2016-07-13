@@ -1,0 +1,10 @@
+server {
+  listen *:${NGINX_PORT} default;
+  server_name ${NGINX_HOST};
+
+  location / {
+    alias /srv/;
+    autoindex on;
+  }
+}
+

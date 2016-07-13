@@ -41,10 +41,10 @@ Nginx web accelerator
 
 File server
 - Still to be implemented, current config uses local file storage
-- Production environment has been configured with cifs to EMC Isilon (To be documented).
+- Production environment has been configured with cifs to EMC Isilon (To be documented) implemented with docker volume abstraction layer (docker-volume-netshare plugin).
 
 Docker host
-- Configured using Puppet, settings in hiera
+- Configured using Puppet, settings in hiera.
 
 The build of MyTardis application and MyTardis static Docker containers is in appropriate Dockerfiles
 Currently the configuration and deployment of the MyTardis and MyTardis static docker images is done with docker-compose.

@@ -65,7 +65,22 @@ Vagrant.configure(2) do |config|
     docker.vm.network "private_network", ip: "192.168.33.11", auto_config: false
     docker.vm.provision "network", type: "shell", inline: <<SCRIPT
 echo "192.168.33.10 accel" >> /etc/hosts
-# TODO Configure interface eth0 here; Vagrant autoconf does not work with Docker networks.
+cat > /etc/sysconfig/network-scripts/ifcfg-eth1 <<EOF
+TYPE=Ethernet
+BOOTPROTO=none
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=yes
+IPV6_AUTOCONF=yes
+IPV6_DEFROUTE=yes
+IPV6_FAILURE_FATAL=no
+NAME=eth1
+ONBOOT=yes
+IPADDR=192.168.33.11
+PREFIX=24
+IPV6_PEERDNS=yes
+IPV6_PEERROUTES=yes
+EOF
 SCRIPT
 
     docker.vm.provider "virtualbox" do |vb|
@@ -103,9 +118,9 @@ SCRIPT
 echo '192.168.33.11 docker' >> /etc/hosts
 SCRIPT
     accel.vm.provision "accel", type: "shell", inline: <<SCRIPT
+setsebool httpd_can_network_connect 1	# NB: This did not run, need to run manually; FIX REQUIRED
 cd /etc/puppet/modules
 puppet module install jfryman-nginx
-setsebool httpd_can_network_connect 1
 SCRIPT
     accel.vm.provision "puppet", type: "puppet"
   end

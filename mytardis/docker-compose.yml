@@ -1,0 +1,15 @@
+version: "2"
+services:
+  db:
+    image: postgres
+  app:
+    build: ./app
+    volumes:
+      - ./vol/tardis/settings.py:/srv/mytardis/tardis/settings.py
+      - ./vol/static/:/srv/mytardis/static/
+    ports:
+      - "8000:8000"
+    command: --forwarded-allow-ips="*" --log-level=debug
+    depends_on:
+      - db
+

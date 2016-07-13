@@ -1,5 +1,4 @@
 /.vagrant/
 /docker.vdi
-/mytardis/vol/static/
 .*.swp
 mytardis/vol/tardis/settings.py

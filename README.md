@@ -3,7 +3,7 @@
 Getting started
 
 1. git clone https://github.com/UWA-FoS/mytardis-deployment.git --recursive
-2. copy mytardis/app/src/tardis/default_settings.py to mytardis/vol/tardis/settings.py
+2. ensure that you configure the mytardis docker-compose.yml file for your deployment
 3. ensure that you have installed the Pre-requisits bellow
 
 Project: [MyTardis] (https://github.com/mytardis/mytardis)

@@ -1,21 +1,43 @@
 version: "2"
+volumes:
+  static:
+  store:
+  db:
 services:
   db:
     image: postgres
+    restart: always
+    environment:
+      - DB_NAME=mytardis-development
+      - REPLICATION_USER=repluser
+      - REPLICATION_PASS=repluserpass
+    volumes:
+      - db:/var/lib/postgresql
   app:
     build: ./app
+    restart: always
     volumes:
-      - ./vol/tardis/settings.py:/srv/mytardis/tardis/settings.py
-      - ./vol/static/:/srv/mytardis/static/
+      - ./app/docker-entrypoint.sh:/docker-entrypoint.sh
+      - ./app/settings.py:/srv/mytardis/tardis/settings.py
+      - static:/srv/mytardis/static/
+      - store:/srv/mytardis/var/store/
     ports:
       - "8000:8000"
     command: --forwarded-allow-ips="*" --log-level=debug
     depends_on:
       - db
+    environment:
+      - MYTARDIS_ALLOWED_HOSTS='*'
+      - MYTARDIS_STORAGE_BASE_DIR=/srv/mytardis/var/store
+      - MYTARDIS_STATIC=/srv/mytardis/static/
+      - MYTARDIS_TIME_ZONE=Australia/Perth
+      - MYTARDIS_EMAIL_PORT=25
+      - MYTARDIS_EMAIL_HOST=<enter_smtp_smarthost>
   static:
     image: nginx
+    restart: always
     volumes:
-      - ./vol/static/:/srv/:ro
+      - static:/srv/:ro
       - ./mysite.template:/etc/nginx/conf.d/mysite.template
     ports:
       - "80:80"

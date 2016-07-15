@@ -4,6 +4,7 @@ MAINTAINER Dean Taylor <dean.taylor@uwa.edu.au>
 EXPOSE 8000
 
 ENV PYTHONUNBUFFERED 1
+ENV DJANGO_DEBUG=True
 
 # Local directory with project source
 ENV DOCKYARD_SRC=src
@@ -46,4 +47,18 @@ RUN test -L manage.py || ln -s mytardis.py manage.py
 
 # Install Python dependencies
 RUN pip install -r ${DOCKYARD_SRVPROJ}/requirements.txt
+
+COPY ./settings.py $DOCKYARD_SRVPROJ/tardis/
+
+ENV MYTARDIS_ALLOWED_HOSTS='*'
+# Database settings
+# Repository settings
+ENV MYTARDIS_DEFAULT_STORAGE_BASE_DIR=${DOCKYARD_SRVPROJ}/var/store
+ENV MYTARDIS_STAGING_PATH=${DOCKYARD_SRVPROJ}/var/staging
+ENV MYTARDIS_REQUIRE_DATAFILE_CHECKSUMS=True
+ENV MYTARDIS_REQUIRE_DATAFILE_SIZES=True
+ENV MYTARDIS_REQUIRE_VALIDATION_ON_INGESTION=True
+# Static files
+ENV MYTARDIS_STATIC_ROOT=${DOCKYARD_SRVPROJ}/static
+ENV MYTARDIS_STATIC_URL=/static/
 

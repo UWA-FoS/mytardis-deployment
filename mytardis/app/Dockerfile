@@ -34,10 +34,7 @@ WORKDIR $DOCKYARD_SRVHOME
 RUN mkdir logs media static
 VOLUME ["$DOCKYARD_SRVHOME/logs/", "$DOCKYARD_SRVHOME/media/", "$DOCKYARD_SRVHOME/static/"]
 
-# Copy entrypoint script into the image
 WORKDIR $DOCKYARD_SRVPROJ
-COPY ./docker-entrypoint.sh /
-ENTRYPOINT ["/docker-entrypoint.sh"]
 
 # Copy application source code to SRCDIR
 #ADD requirements.txt $DOCKYARD_SRVPROJ
@@ -48,6 +45,11 @@ RUN test -L manage.py || ln -s mytardis.py manage.py
 # Install Python dependencies
 RUN pip install -r ${DOCKYARD_SRVPROJ}/requirements.txt
 
+# Copy entrypoint script into the image
+COPY ./docker-entrypoint.sh /
+ENTRYPOINT ["/docker-entrypoint.sh"]
+
+# Copy Dockerized setting.py file into the project folder
 COPY ./settings.py $DOCKYARD_SRVPROJ/tardis/
 
 ENV MYTARDIS_ALLOWED_HOSTS='*'

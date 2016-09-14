@@ -14,11 +14,9 @@ services:
     volumes:
       - db:/var/lib/postgresql
   app:
-    build: ./app
+    build: .
     restart: always
     volumes:
-      - ./app/docker-entrypoint.sh:/docker-entrypoint.sh
-      - ./app/settings.py:/srv/mytardis/tardis/settings.py
       - static:/srv/mytardis/static/
       - store:/srv/mytardis/var/store/
     ports:

@@ -19,6 +19,9 @@ python manage.py collectstatic --noinput	# Collect static files
 
 python manage.py migrate	# Apply database migrations
 
+# https://github.com/mytardis/mytardis-app-mydata
+python mytardis.py loaddata tardis/apps/mydata/fixtures/default_experiment_schema.json
+
 # Prepare log files and start outputting logs to stdout
 touch /srv/logs/gunicorn.log
 touch /srv/logs/access.log

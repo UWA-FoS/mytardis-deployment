@@ -28,4 +28,7 @@ EMAIL_HOST = os.getenv('MYTARDIS_EMAIL_HOST', 'smtp.gmail.com')
 EMAIL_HOST_USER = os.getenv('MYTARDIS_EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.getenv('MYTARDIS_EMAIL_HOST_PASSWORD', '')
 EMAIL_USE_TLS = os.getenv('MYTARDIS_EMAIL_USE_TLS', 'True')
-SECRET_KEY="^*!%^kr(&lbnufh35r*%e\e9pd4bmrzs(+_k8)%98ngwk@5+6="  # generated from build.sh
+
+# MyData
+if os.path.isdir('/srv/mytardis/tardis/apps/mydata'):
+    INSTALLED_APPS += ('tardis.apps.mydata',)

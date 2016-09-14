@@ -38,7 +38,7 @@ WORKDIR $DOCKYARD_SRVPROJ
 
 # Copy application source code to SRCDIR
 #ADD requirements.txt $DOCKYARD_SRVPROJ
-COPY $DOCKYARD_SRC $DOCKYARD_SRVPROJ
+COPY $DOCKYARD_SRC/mytardis $DOCKYARD_SRVPROJ
 # add link so that standard Django script will work as expected
 RUN test -L manage.py || ln -s mytardis.py manage.py
 
@@ -64,3 +64,7 @@ ENV MYTARDIS_REQUIRE_VALIDATION_ON_INGESTION=True
 ENV MYTARDIS_STATIC_ROOT=${DOCKYARD_SRVPROJ}/static
 ENV MYTARDIS_STATIC_URL=/static/
 
+# mytardis-app-mydata
+# https://github.com/mytardis/mytardis-app-mydata
+COPY $DOCKYARD_SRC/mydata $DOCKYARD_SRVPROJ/tardis/apps
+RUN pip install -r $DOCKYARD_SRVPROJ/tardis/apps/mydata/requirements.txt

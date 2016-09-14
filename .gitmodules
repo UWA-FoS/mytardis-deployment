@@ -1,3 +1,6 @@
 [submodule "mytardis/app/src"]
-	path = mytardis/app/src
+	path = mytardis/src/mytardis
 	url = https://github.com/mytardis/mytardis.git
+[submodule "mytardis/src/mydata"]
+	path = mytardis/src/mydata
+	url = https://github.com/wettenhj/mytardis-app-mydata

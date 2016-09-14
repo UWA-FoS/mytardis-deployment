@@ -4,6 +4,7 @@ Getting started
 
 1. Ensure you have installed:
   1. [VirtualBox] (https://www.virtualbox.org/)
+    - Ensure that you include the Extension Pack
   2. [Vagrant] (https://www.vagrantup.com/)
     - Vagrant plugins:
       - vbguest {run: vagrant plugin install vagrant-vbguest}
@@ -13,7 +14,7 @@ Getting started
 3. Build the base Docker server and log in
   - vagrant up
   - vagrant ssh
-4. Start a tmux session. [TMUX] (https://tmux.github.io/) has been installed to allow multiple terminals
+4. Start a tmux session. [tmux] (https://tmux.github.io/) has been installed to allow multiple terminals
   - tmux
 5. Build the mytardis application image
   - cd ~/sync/mytardis
@@ -21,7 +22,7 @@ Getting started
 6. Start the MyTardis application
   - docker-compose up
 7. Change to another terminal and configure an administrator account
-  - Press \<ctrl\>+B C	;tmux to create another terminal
+  - Press \<ctrl\>+B C
   - docker exec -it mytardis_app_1 /bin/bash
   - python mytardis.py createsuperuser
 8. From your host machine start a browser and enter the following URI
@@ -29,7 +30,7 @@ Getting started
 
 You should now see the MyTardis home page.
 
-Please take not that this is a full build environment for the development of a Docker based cluster service NOT for production deployment.
+NB: this is a full build environment for Docker containers to be deployed on a Docker cluster NOT for production directly.
 
 Enjoy.
 

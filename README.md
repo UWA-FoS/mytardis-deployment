@@ -3,9 +3,9 @@
 Getting started
 
 1. Ensure you have installed:
-  1. [VirtualBox] (https://www.virtualbox.org/)
+  1. [VirtualBox](https://www.virtualbox.org/)
     - Ensure that you include the Extension Pack
-  2. [Vagrant] (https://www.vagrantup.com/)
+  2. [Vagrant](https://www.vagrantup.com/)
     - Vagrant plugins:
       - vbguest {run: vagrant plugin install vagrant-vbguest}
 2. Use git to clone the development code into your prefered sandbox location
@@ -14,7 +14,7 @@ Getting started
 3. Build the base Docker server and log in
   - vagrant up
   - vagrant ssh
-4. Start a tmux session. [tmux] (https://tmux.github.io/) has been installed to allow multiple terminals
+4. Start a tmux session. [Tmux](https://tmux.github.io/) has been installed to allow multiple terminals
   - tmux
 5. Build the mytardis application image
   - cd ~/sync/mytardis
@@ -22,7 +22,7 @@ Getting started
 6. Start the MyTardis application
   - docker-compose up
 7. Change to another terminal and configure an administrator account
-  - Press \<ctrl\>+B C
+  - Press \<Ctrl\>+B C
   - docker exec -it mytardis_app_1 /bin/bash
   - python mytardis.py createsuperuser
 8. From your host machine start a browser and enter the following URI
@@ -36,7 +36,7 @@ Enjoy.
 
 NB: You should ensure that you configure the mytardis docker-compose.yml file for your deployment
 
-Project: [MyTardis] (https://github.com/mytardis/mytardis)
+Project: [MyTardis](https://github.com/mytardis/mytardis)
 
 ```
 The University of Western Australia
@@ -45,8 +45,8 @@ Development and testing environment
 ```
 
 Pre-requisits:
-- [VirtualBox] (https://www.virtualbox.org/)
-- [Vagrant] (https://www.vagrantup.com/>)
+- [VirtualBox](https://www.virtualbox.org/)
+- [Vagrant](https://www.vagrantup.com/)
   - Vagrant plugins:
     - vbguest {run: vagrant plugin install vagrant-vbguest}
 
@@ -55,7 +55,7 @@ Notes:
 MyTardis application
 - Runs in Docker container
 - ubuntu 14.04
-- [Gunicorn] (gunicorn.org)
+- [Gunicorn](http://gunicorn.org)
 - exposes port 8000
 - This implementation is not to be exposed to the web directly but housed behind a web accelerator
 

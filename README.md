@@ -2,9 +2,30 @@
 
 Getting started
 
-1. git clone https://github.com/UWA-FoS/mytardis-deployment.git --recursive
-2. ensure that you configure the mytardis docker-compose.yml file for your deployment
-3. ensure that you have installed the Pre-requisits bellow
+1. Ensure you have installed:
+  1. [VirtualBox] (https://www.virtualbox.org/)
+  2. [Vagrant] (https://www.vagrantup.com/)
+    - Vagrant plugins:
+      - vbguest {run: vagrant plugin install vagrant-vbguest}
+2. Use git to clone the development code into your prefered sandbox location
+  - git clone --recursive https://github.com/UWA-FoS/mytardis-deployment.git mytardis
+  - cd mytardis
+3. Build the base Docker server and log in
+  - vagrant up
+  - vagrant ssh
+4. [TMUX] (https://tmux.github.io/) has been installed to allow multiple terminals
+  - tmux
+5. Build the mytardis application image
+  - cd ~/sync/mytardis
+  - docker-compose build
+6. Start the MyTardis application
+  - docker-compose up
+7. Change to another terminal and configure an administrator account
+  - Press <ctrl>+B C	;tmux to create another terminal
+  - docker exec -it mytardis_app_1 /bin/bash
+  - python mytardis.py createsuperuser
+
+NB: You should ensure that you configure the mytardis docker-compose.yml file for your deployment
 
 Project: [MyTardis] (https://github.com/mytardis/mytardis)
 

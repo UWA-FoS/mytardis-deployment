@@ -66,5 +66,5 @@ ENV MYTARDIS_STATIC_URL=/static/
 
 # mytardis-app-mydata
 # https://github.com/mytardis/mytardis-app-mydata
-COPY $DOCKYARD_SRC/mydata $DOCKYARD_SRVPROJ/tardis/apps
+COPY $DOCKYARD_SRC/mydata $DOCKYARD_SRVPROJ/tardis/apps/mydata
 RUN pip install -r $DOCKYARD_SRVPROJ/tardis/apps/mydata/requirements.txt

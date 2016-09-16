@@ -1,8 +1,9 @@
 version: "2"
 volumes:
+  db:
+  staging:
   static:
   store:
-  db:
 services:
   db:
     image: postgres
@@ -17,6 +18,7 @@ services:
     build: .
     restart: always
     volumes:
+      - staging:/srv/mytardis/var/staging/
       - static:/srv/mytardis/static/
       - store:/srv/mytardis/var/store/
     ports:

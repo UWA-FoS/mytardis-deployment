@@ -32,3 +32,7 @@ EMAIL_USE_TLS = os.getenv('MYTARDIS_EMAIL_USE_TLS', 'True')
 # MyData
 if os.path.isdir('/srv/mytardis/tardis/apps/mydata'):
     INSTALLED_APPS += ('tardis.apps.mydata',)
+
+# Celery and RabbitMQ
+BROKER_URL = os.getenv('MYTARDIS_BROKER_URL', 'pyamqp://guest@rabbit//')
+CELERY_RESULT_BACKEND = os.getenv('MYTARDIS_CELERY_RESULT_BACKEND', 'rpc://')

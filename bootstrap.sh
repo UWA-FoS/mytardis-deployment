@@ -16,7 +16,7 @@ yum -y install \
 cd /etc/puppet/modules
 #[ -d samba ] || git clone --recursive git://git.science.uwa.edu.au/sciituwa-samba samba
 
-puppet module install puppetlabs-stdlib --version 3.2.1
-puppet module install puppetlabs-concat --version 1.1.0
+puppet module install puppetlabs-stdlib --version 4.13.1
+puppet module install puppetlabs-concat --version 2.2.0
 puppet module install puppetlabs-ntp --version 4.2.0
 

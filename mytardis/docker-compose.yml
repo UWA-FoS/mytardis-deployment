@@ -24,8 +24,9 @@ services:
     ports:
       - "8000:8000"
     command: --forwarded-allow-ips="*" --log-level=debug
-    depends_on:
+    links:
       - db
+      - rabbit
     environment:
       - MYTARDIS_ALLOWED_HOSTS='*'
       - MYTARDIS_STORAGE_BASE_DIR=/srv/mytardis/var/store
@@ -45,3 +46,16 @@ services:
       - NGINX_HOST=mytardis-static.science.uwa.edu.au
       - NGINX_PORT=80
     command: /bin/bash -c "envsubst < /etc/nginx/conf.d/mysite.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+  rabbit:
+    image: rabbitmq:3-management
+    hostname: django-rabbit-001
+    environment:
+      - RABBITMQ_ERLANG_COOKIE='secret cookie here'
+    ports:
+      - '8080:15672'
+  celery:
+    image: celery
+    links:
+      - rabbit
+    volumes:
+      - ./src/mytardis/tardis/tardis_portal:/home/user

@@ -1,4 +1,4 @@
-version: "2"
+version: '2'
 volumes:
   db:
   staging:
@@ -54,8 +54,20 @@ services:
     ports:
       - '8080:15672'
   celery:
-    image: celery
-    links:
-      - rabbit
+    build:
+      context: .
+      dockerfile: Dockerfile-mytardis_celery
     volumes:
-      - ./src/mytardis/tardis/tardis_portal:/home/user
+      - staging:/srv/mytardis/var/staging/
+      - static:/srv/mytardis/static/
+      - store:/srv/mytardis/var/store/
+    links:
+      - db
+      - rabbit
+    environment:
+      - MYTARDIS_ALLOWED_HOSTS='*'
+      - MYTARDIS_STORAGE_BASE_DIR=/srv/mytardis/var/store
+      - MYTARDIS_STATIC=/srv/mytardis/static/
+      - MYTARDIS_TIME_ZONE=Australia/Perth
+      - MYTARDIS_EMAIL_PORT=25
+      - MYTARDIS_EMAIL_HOST=<enter_smtp_smarthost>

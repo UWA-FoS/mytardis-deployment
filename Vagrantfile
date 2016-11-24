@@ -43,6 +43,7 @@ Vagrant.configure(2) do |config|
   # config.vm.synced_folder "../data", "/vagrant_data"
   config.vm.synced_folder ".", "/home/vagrant/sync", type: "virtualbox"
   config.vm.synced_folder "./puppet", "/etc/puppet", type: "virtualbox"
+  config.vm.synced_folder ".", "/vagrant", type: "virtualbox"
 
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
@@ -88,10 +89,11 @@ SCRIPT
       unless File.exist?('./docker.vdi')
         vb.customize ['createhd','--filename','docker.vdi','--size',500*1024]
       end
-      vb.customize ['storageattach',:id,'--storagectl','IDE Controller','--port',1,'--device',0,'--type','hdd','--medium','docker.vdi']
+      vb.customize ['storageattach',:id,'--storagectl','IDE','--port',1,'--device',0,'--type','hdd','--medium','docker.vdi']
+      # vb.customize ['storageattach',:id,'--storagectl','IDE Controller','--port',1,'--device',0,'--type','hdd','--medium','docker.vdi']
 
-      vb.memory = "2048"
-      vb.cpus = "2"
+      vb.memory = "4096"
+      vb.cpus = "4"
     end
 
     # Configure second HDD for docker local storage (LVM); see bin/docker.sh bootstrap script

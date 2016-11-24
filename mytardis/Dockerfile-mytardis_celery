@@ -63,8 +63,10 @@ ENV MYTARDIS_STATIC_URL=/static/
 COPY $DOCKYARD_SRC/mydata $DOCKYARD_SRVPROJ/tardis/apps/mydata
 RUN pip install -r $DOCKYARD_SRVPROJ/tardis/apps/mydata/requirements.txt
 
-CMD python manage.py celery worker
 RUN python -c "import os; from random import choice; key_line = '%sSECRET_KEY=\"%s\"  # generated from build.sh\n' % ('from tardis.settings_changeme import * \n\n' if not os.path.isfile('tardis/settings.py') else '', ''.join([choice('abcdefghijklmnopqrstuvwxyz0123456789\\!@#$%^&*(-_=+)') for i in range(50)])); f=open('tardis/settings.py', 'a+'); f.write(key_line); f.close()"
-ENV C_FORCE_ROOT="true"
 
-CMD python manage.py celeryd -c 4 -n "allqueues.%%h"
+#ENV C_FORCE_ROOT="true"
+RUN groupadd user && useradd --home-dir $DOCKYARD_SRVPROJ -g user user
+
+USER user
+CMD python manage.py celery worker -c 4 -n "allqueues.%%h"

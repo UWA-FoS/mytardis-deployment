@@ -68,3 +68,10 @@ ENV MYTARDIS_STATIC_URL=/static/
 # https://github.com/mytardis/mytardis-app-mydata
 COPY $DOCKYARD_SRC/mydata $DOCKYARD_SRVPROJ/tardis/apps/mydata
 RUN pip install -r $DOCKYARD_SRVPROJ/tardis/apps/mydata/requirements.txt
+
+# Bioformats
+# https://github.com/keithschulze/mytardisbf
+RUN pip install -U numpy
+RUN apt-get -y install \
+  openjdk-7-jdk
+RUN pip install -e git+https://github.com/keithschulze/mytardisbf.git@0.1.1#egg=mytardisbf

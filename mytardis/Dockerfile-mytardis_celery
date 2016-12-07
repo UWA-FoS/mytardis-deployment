@@ -68,5 +68,12 @@ RUN python -c "import os; from random import choice; key_line = '%sSECRET_KEY=\"
 #ENV C_FORCE_ROOT="true"
 RUN groupadd user && useradd --home-dir $DOCKYARD_SRVPROJ -g user user
 
+# Bioformats
+# https://github.com/keithschulze/mytardisbf
+RUN pip install -U numpy
+RUN apt-get -y install \
+  openjdk-7-jdk
+RUN pip install -e git+https://github.com/keithschulze/mytardisbf.git@0.1.1#egg=mytardisbf
+
 USER user
 CMD python manage.py celery worker -c 4 -n "allqueues.%%h"

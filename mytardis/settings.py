@@ -36,3 +36,13 @@ if os.path.isdir('/srv/mytardis/tardis/apps/mydata'):
 # Celery and RabbitMQ
 BROKER_URL = os.getenv('MYTARDIS_BROKER_URL', 'pyamqp://guest@rabbit//')
 CELERY_RESULT_BACKEND = os.getenv('MYTARDIS_CELERY_RESULT_BACKEND', 'rpc://')
+
+# Bioformats
+# https://github.com/keithschulze/mytardisbf
+INSTALLED_APPS += ('mytardisbf',)
+MIDDLEWARE_CLASSES += ('tardis.tardis_portal.filters.FilterInitMiddleware',)
+FILTER_MIDDLEWARE = (("tardis.tardis_portal.filters", "FilterInitMiddleware"),)
+POST_SAVE_FILTERS = [
+   ("mytardisbf.filters.metadata_filter.make_filter",
+   ["BioformatsMetadata", "http://tardis.edu.au/schemas/bioformats/2"]),
+]

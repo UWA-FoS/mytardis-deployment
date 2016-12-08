@@ -43,21 +43,6 @@ RUN test -L manage.py || ln -s mytardis.py manage.py
 # Install Python dependencies
 RUN pip install -r ${DOCKYARD_SRVPROJ}/requirements.txt
 
-# Copy Dockerized setting.py file into the project folder
-COPY ./settings.py $DOCKYARD_SRVPROJ/tardis/
-
-ENV MYTARDIS_ALLOWED_HOSTS='*'
-# Database settings
-# Repository settings
-ENV MYTARDIS_DEFAULT_STORAGE_BASE_DIR=${DOCKYARD_SRVPROJ}/var/store
-ENV MYTARDIS_STAGING_PATH=${DOCKYARD_SRVPROJ}/var/staging
-ENV MYTARDIS_REQUIRE_DATAFILE_CHECKSUMS=True
-ENV MYTARDIS_REQUIRE_DATAFILE_SIZES=True
-ENV MYTARDIS_REQUIRE_VALIDATION_ON_INGESTION=True
-# Static files
-ENV MYTARDIS_STATIC_ROOT=${DOCKYARD_SRVPROJ}/static
-ENV MYTARDIS_STATIC_URL=/static/
-
 # mytardis-app-mydata
 # https://github.com/mytardis/mytardis-app-mydata
 COPY $DOCKYARD_SRC/mydata $DOCKYARD_SRVPROJ/tardis/apps/mydata
@@ -71,9 +56,26 @@ RUN groupadd user && useradd --home-dir $DOCKYARD_SRVPROJ -g user user
 # Bioformats
 # https://github.com/keithschulze/mytardisbf
 RUN pip install -U numpy
-RUN apt-get -y install \
+RUN apt-get update && apt-get -y install \
   openjdk-7-jdk
 RUN pip install -e git+https://github.com/keithschulze/mytardisbf.git@0.1.1#egg=mytardisbf
+
+ENV MYTARDIS_ALLOWED_HOSTS='*'
+# Database settings
+# Repository settings
+ENV MYTARDIS_DEFAULT_STORAGE_BASE_DIR=${DOCKYARD_SRVPROJ}/var/store
+ENV MYTARDIS_STAGING_PATH=${DOCKYARD_SRVPROJ}/var/staging
+ENV MYTARDIS_REQUIRE_DATAFILE_CHECKSUMS=True
+ENV MYTARDIS_REQUIRE_DATAFILE_SIZES=True
+ENV MYTARDIS_REQUIRE_VALIDATION_ON_INGESTION=True
+# Static files
+ENV MYTARDIS_STATIC_ROOT=${DOCKYARD_SRVPROJ}/static
+ENV MYTARDIS_STATIC_URL=/static/
+# Filters
+ENV MYTARDIS_ENABLE_FILTER_BIOFORMATS='False'
+
+# Copy Dockerized setting.py file into the project folder
+COPY ./settings.py $DOCKYARD_SRVPROJ/tardis/
 
 USER user
 CMD python manage.py celery worker -c 4 -n "allqueues.%%h"

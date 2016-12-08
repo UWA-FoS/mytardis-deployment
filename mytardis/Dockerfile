@@ -45,12 +45,17 @@ RUN test -L manage.py || ln -s mytardis.py manage.py
 # Install Python dependencies
 RUN pip install -r ${DOCKYARD_SRVPROJ}/requirements.txt
 
-# Copy entrypoint script into the image
-COPY ./docker-entrypoint.sh /
-ENTRYPOINT ["/docker-entrypoint.sh"]
+# mytardis-app-mydata
+# https://github.com/mytardis/mytardis-app-mydata
+COPY $DOCKYARD_SRC/mydata $DOCKYARD_SRVPROJ/tardis/apps/mydata
+RUN pip install -r $DOCKYARD_SRVPROJ/tardis/apps/mydata/requirements.txt
 
-# Copy Dockerized setting.py file into the project folder
-COPY ./settings.py $DOCKYARD_SRVPROJ/tardis/
+# Bioformats
+# https://github.com/keithschulze/mytardisbf
+RUN pip install -U numpy
+RUN apt-get -y install \
+  openjdk-7-jdk
+RUN pip install -e git+https://github.com/keithschulze/mytardisbf.git@0.1.1#egg=mytardisbf
 
 ENV MYTARDIS_ALLOWED_HOSTS='*'
 # Database settings
@@ -63,15 +68,12 @@ ENV MYTARDIS_REQUIRE_VALIDATION_ON_INGESTION=True
 # Static files
 ENV MYTARDIS_STATIC_ROOT=${DOCKYARD_SRVPROJ}/static
 ENV MYTARDIS_STATIC_URL=/static/
+# Filters
+ENV MYTARDIS_ENABLE_FILTER_BIOFORMATS='False'
 
-# mytardis-app-mydata
-# https://github.com/mytardis/mytardis-app-mydata
-COPY $DOCKYARD_SRC/mydata $DOCKYARD_SRVPROJ/tardis/apps/mydata
-RUN pip install -r $DOCKYARD_SRVPROJ/tardis/apps/mydata/requirements.txt
+# Copy Dockerized setting.py file into the project folder
+COPY ./settings.py $DOCKYARD_SRVPROJ/tardis/
 
-# Bioformats
-# https://github.com/keithschulze/mytardisbf
-RUN pip install -U numpy
-RUN apt-get -y install \
-  openjdk-7-jdk
-RUN pip install -e git+https://github.com/keithschulze/mytardisbf.git@0.1.1#egg=mytardisbf
+# Copy entrypoint script into the image
+COPY ./docker-entrypoint.sh /
+ENTRYPOINT ["/docker-entrypoint.sh"]

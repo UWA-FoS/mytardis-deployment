@@ -34,6 +34,7 @@ services:
       - MYTARDIS_TIME_ZONE=Australia/Perth
       - MYTARDIS_EMAIL_PORT=25
       - MYTARDIS_EMAIL_HOST=<enter_smtp_smarthost>
+      - MYTARDIS_ENABLE_FILTER_BIOFORMATS='True'
   static:
     image: nginx
     restart: always

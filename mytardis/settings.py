@@ -47,3 +47,5 @@ if os.getenv('MYTARDIS_ENABLE_FILTER_BIOFORMATS', 'False') == 'True':
         ("mytardisbf.filters.metadata_filter.make_filter",
         ["BioformatsMetadata", "http://tardis.edu.au/schemas/bioformats/2"]),
     ]
+
+SECRET_KEY = os.getenv('MYTARDIS_SECRET_KEY', 'Not_Set_^i$&vpqasibb%8o7%lr_#7$a$3ya3_80r1h%e6%5f(')

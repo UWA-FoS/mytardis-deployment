@@ -17,7 +17,7 @@ RUN apt-get -y install \
   python-pip
 RUN pip install -U pip
 
-RUN apt-get -y install \
+RUN apt-get update && apt-get -y install \
   git ipython libldap2-dev libsasl2-dev \
   libssl-dev libxml2-dev libxslt1-dev python-anyjson \
   python-billiard python-bs4 python-crypto python-dateutil \
@@ -48,8 +48,6 @@ RUN pip install -r ${DOCKYARD_SRVPROJ}/requirements.txt
 COPY $DOCKYARD_SRC/mydata $DOCKYARD_SRVPROJ/tardis/apps/mydata
 RUN pip install -r $DOCKYARD_SRVPROJ/tardis/apps/mydata/requirements.txt
 
-RUN python -c "import os; from random import choice; key_line = '%sSECRET_KEY=\"%s\"  # generated from build.sh\n' % ('from tardis.settings_changeme import * \n\n' if not os.path.isfile('tardis/settings.py') else '', ''.join([choice('abcdefghijklmnopqrstuvwxyz0123456789\\!@#$%^&*(-_=+)') for i in range(50)])); f=open('tardis/settings.py', 'a+'); f.write(key_line); f.close()"
-
 #ENV C_FORCE_ROOT="true"
 RUN groupadd user && useradd --home-dir $DOCKYARD_SRVPROJ -g user user
 
@@ -73,6 +71,7 @@ ENV MYTARDIS_STATIC_ROOT=${DOCKYARD_SRVPROJ}/static
 ENV MYTARDIS_STATIC_URL=/static/
 # Filters
 ENV MYTARDIS_ENABLE_FILTER_BIOFORMATS='False'
+ENV MYTARDIS_SECRET_KEY='Must_Change_$@(0#6e*-hzj)k#86u=$9w-%m3+moa77ypemkb'
 
 # Copy Dockerized setting.py file into the project folder
 COPY ./settings.py $DOCKYARD_SRVPROJ/tardis/

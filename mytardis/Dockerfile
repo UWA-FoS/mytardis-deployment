@@ -19,7 +19,7 @@ RUN apt-get -y install \
   python-pip
 RUN pip install -U pip
 
-RUN apt-get -y install \
+RUN apt-get update && apt-get -y install \
   git ipython libldap2-dev libsasl2-dev \
   libssl-dev libxml2-dev libxslt1-dev python-anyjson \
   python-billiard python-bs4 python-crypto python-dateutil \
@@ -70,6 +70,7 @@ ENV MYTARDIS_STATIC_ROOT=${DOCKYARD_SRVPROJ}/static
 ENV MYTARDIS_STATIC_URL=/static/
 # Filters
 ENV MYTARDIS_ENABLE_FILTER_BIOFORMATS='False'
+ENV MYTARDIS_SECRET_KEY='Must_Change_$@(0#6e*-hzj)k#86u=$9w-%m3+moa77ypemkb'
 
 # Copy Dockerized setting.py file into the project folder
 COPY ./settings.py $DOCKYARD_SRVPROJ/tardis/

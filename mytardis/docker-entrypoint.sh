@@ -9,9 +9,7 @@ done
 echo "Connected to DB, will continue processing"
 sleep 5
 
-if ! grep -q '^SECRET_KEY=' tardis/settings.py; then
-python -c "import os; from random import choice; key_line = '%sSECRET_KEY=\"%s\"  # generated from build.sh\n' % ('from tardis.settings_changeme import * \n\n' if not os.path.isfile('tardis/settings.py') else '', ''.join([choice('abcdefghijklmnopqrstuvwxyz0123456789\\!@#$%^&*(-_=+)') for i in range(50)])); f=open('tardis/settings.py', 'a+'); f.write(key_line); f.close()"
-fi
+[ -z $MYTARDIS_SECRET_KEY ] && export MYTARDIS_SECRET_KEY=$(python manage.py generate_secret_key)
 
 enable_bioformats="${MYTARDIS_ENABLE_FILTER_BIOFORMATS}"
 [[ "${MYTARDIS_ENABLE_FILTER_BIOFORMATS}" == 'True' ]] && export MYTARDIS_ENABLE_FILTER_BIOFORMATS='False'

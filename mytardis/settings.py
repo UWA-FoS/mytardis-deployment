@@ -49,3 +49,22 @@ if os.getenv('MYTARDIS_ENABLE_FILTER_BIOFORMATS', 'False') == 'True':
     ]
 
 SECRET_KEY = os.getenv('MYTARDIS_SECRET_KEY', 'Not_Set_^i$&vpqasibb%8o7%lr_#7$a$3ya3_80r1h%e6%5f(')
+
+TIME_ZONE = os.getenv('MYTARDIS_TIME_ZONE', 'Australia/Perth')
+SITE_TITLE = os.getenv('MYTARDIS_SITE_TITLE', 'MyTardis')
+
+# LDAP authnz
+if 'MYTARDIS_LDAP_URL' in os.environ:
+    AUTH_PROVIDERS += (('ldap', 'LDAP Auth', 'tardis.tardis_portal.auth.ldap_auth.ldap_auth'),)
+    LDAP_ADMIN_USER = os.getenv('MYTARDIS_LDAP_ADMIN_USER', '')
+    LDAP_ADMIN_PASSWORD = os.getenv('MYTARDIS_LDAP_ADMIN_PASSWORD', '') 
+    LDAP_TLS = os.getenv('MYTARDIS_LDAP_TLS', 'True')
+    LDAP_URL = os.getenv('MYTARDIS_LDAP_URL')
+    LDAP_USER_LOGIN_ATTR = os.getenv('MYTARDIS_LDAP_USER_LOGIN_ATTR', 'uid')
+    LDAP_USER_ATTR_MAP = {"givenName": "display", "mail": "email", "sn": "last_name"}
+    LDAP_GROUP_ID_ATTR = os.getenv('MYTARDIS_LDAP_GROUP_ID_ATTR', 'ou')
+    LDAP_GROUP_ATTR_MAP = {"description": "display"}
+    LDAP_BASE = os.getenv('MYTARDIS_LDAP_BASE', "DC=uwa,DC=edu,DC=au")
+    LDAP_USER_BASE = os.getenv('MYTARDIS_LDAP_USER_BASE', "OU=People," + LDAP_BASE)
+    LDAP_GROUP_BASE = os.getenv('MYTARDIS_LDAP_GROUP_BASE', ",".join(("OU=Groups", LDAP_BASE)))
+

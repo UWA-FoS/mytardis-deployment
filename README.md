@@ -16,6 +16,7 @@ Getting started
   - vagrant ssh
 4. Start a tmux session. [Tmux](https://tmux.github.io/) has been installed to allow multiple terminals
   - tmux
+5. Copy the template.env.XXXX files removing the "template." prefix and add your deployments relevant settings. If you do not intend to implement these features then remove the entry in the docker-compose.yml referencing the environment file under "env_file:"
 5. Build the mytardis application image
   - cd ~/sync/mytardis
   - docker-compose build

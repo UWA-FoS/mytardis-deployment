@@ -32,10 +32,11 @@ services:
       - MYTARDIS_STORAGE_BASE_DIR=/srv/mytardis/var/store
       - MYTARDIS_STATIC=/srv/mytardis/static/
       - MYTARDIS_TIME_ZONE=Australia/Perth
-      - MYTARDIS_EMAIL_PORT=25
-      - MYTARDIS_EMAIL_HOST=<enter_smtp_smarthost>
       - MYTARDIS_ENABLE_FILTER_BIOFORMATS='True'
-      - MYTARDIS_SECRET_KEY='x*fc-gpcw&%bu(hb*dbk1kuow6@2*l0cbbml_g93#$$jzdn77%s'
+    env_file:
+      - env.mytardis_secret_key
+      - env.mytardis_email
+      - env.mytardis_ldap_1
   static:
     image: nginx
     restart: always
@@ -71,7 +72,7 @@ services:
       - MYTARDIS_STORAGE_BASE_DIR=/srv/mytardis/var/store
       - MYTARDIS_STATIC=/srv/mytardis/static/
       - MYTARDIS_TIME_ZONE=Australia/Perth
-      - MYTARDIS_EMAIL_PORT=25
-      - MYTARDIS_EMAIL_HOST=<enter_smtp_smarthost>
       - MYTARDIS_ENABLE_FILTER_BIOFORMATS='True'
-      - MYTARDIS_SECRET_KEY='x*fc-gpcw&%bu(hb*dbk1kuow6@2*l0cbbml_g93#$$jzdn77%s'
+    env_file:
+      - env.mytardis_secret_key
+      - env.mytardis_email

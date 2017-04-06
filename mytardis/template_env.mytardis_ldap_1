@@ -1,0 +1,6 @@
+MYTARDIS_LDAP_URL=ldaps://ldap.uwa.edu.au
+MYTARDIS_LDAP_TLS='False'
+MYTARDIS_LDAP_BASE=DC=uwa,DC=edu,DC=au
+MYTARDIS_LDAP_USER_BASE=OU=People,DC=uwa,DC=edu,DC=au
+MYTARDIS_LDAP_ADMIN_USER=CN=mytardisserviceaccount,OU=People,DC=uwa,DC=edu,DC=au
+MYTARDIS_LDAP_ADMIN_PASSWORD=<Service account password>

@@ -1,0 +1,6 @@
+FROM haproxy:1.7
+MAINTAINER Dean Taylor <dean.taylor@uwa.edu.au>
+
+RUN apt-get update && apt-get -y install \
+  gettext-base
+RUN apt-get clean all

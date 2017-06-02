@@ -4,6 +4,12 @@ from default_settings import *
 # Turn on Django debug mode
 DEBUG = os.getenv('DJANGO_DEBUG', 'True')
 
+# Global Defaults
+SITE_TITLE = os.getenv('MYTARDIS_SITE_TITLE', 'MyTardis @UWA')
+DEFAULT_INSTITUTION = os.getenv('MYTARDIS_DEFAULT_INSTITUTION', 'The University of Western Australia')
+USE_X_FORWARDED_HOST = os.getenv('MYTARDIS_USE_X_FORWARDED_HOST', 'True')
+
+# Database backend
 DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
 DATABASES['default']['NAME'] = os.getenv('POSTGRES_DB', 'postgres')
 DATABASES['default']['USER'] = os.getenv('POSTGRES_USER', 'postgres')
@@ -23,15 +29,21 @@ STATIC_ROOT = os.getenv('MYTARDIS_STATIC_ROOT', '/srv/mytardis/static')
 STATIC_URL = os.getenv('MYTARDIS_STATIC_URL', '/static/')
 
 # Email Configuration
-EMAIL_PORT = os.getenv('MYTARDIS_EMAIL_PORT', 587) 
+EMAIL_PORT = os.getenv('MYTARDIS_EMAIL_PORT', 587)
 EMAIL_HOST = os.getenv('MYTARDIS_EMAIL_HOST', 'smtp.gmail.com')
 EMAIL_HOST_USER = os.getenv('MYTARDIS_EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.getenv('MYTARDIS_EMAIL_HOST_PASSWORD', '')
 EMAIL_USE_TLS = os.getenv('MYTARDIS_EMAIL_USE_TLS', 'True')
+SERVER_EMAIL = os.getenv('MYTARDIS_SERVER_EMAIL', 'MyTardis-UWA@uwa.edu.au')
+EMAIL_USE_TLS = os.getenv('MYTARDIS_EMAIL_USE_TLS', 'True')
+DEFAULT_FROM_EMAIL = os.getenv('MYTARDIS_DEFAULT_FROM_EMAIL', 'MyTardis-UWA@uwa.edu.au')
+EMAIL_SUBJECT_PREFIX = os.getenv('MYTARDIS_EMAIL_SUBJECT_PREFIX', '[MyTardis @UWA] ')
 
 # MyData
 if os.path.isdir('/srv/mytardis/tardis/apps/mydata'):
     INSTALLED_APPS += ('tardis.apps.mydata',)
+if 'MYTARDIS_DEFAULT_RECEIVING_DIR' in os.environ:
+    DEFAULT_RECEIVING_DIR = os.getenv('MYTARDIS_DEFAULT_RECEIVING_DIR', '/var/lib/mytardis/receiving')
 
 # Celery and RabbitMQ
 BROKER_URL = os.getenv('MYTARDIS_BROKER_URL', 'pyamqp://guest@rabbit//')

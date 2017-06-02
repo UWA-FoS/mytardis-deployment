@@ -1,4 +1,5 @@
 /.vagrant/
 /docker.vdi
 .*.swp
-mytardis/vol/tardis/settings.py
+/mytardis/vol/tardis/settings.py
+/mytardis/pki/

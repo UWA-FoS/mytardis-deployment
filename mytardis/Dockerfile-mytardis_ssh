@@ -1,0 +1,29 @@
+FROM debian:latest
+MAINTAINER Dean Taylor <dean.taylor@uwa.edu.au>
+EXPOSE 22
+ENV MYTARDIS_STAGING=/srv/mytardis/var/staging
+ENV MYDATA_HOME=/home/mydata
+VOLUME ["${MYTARDIS_STAGING}"]
+CMD ["/usr/sbin/sshd", "-D"]
+
+# User added early to ensure consistant ID among containers
+RUN addgroup --system \
+  --gid=1000 \
+  mydata
+RUN adduser --system \
+  --uid=1000 --gid=1000 \
+  --home="${MYDATA_HOME}" \
+  --shell=/bin/bash \
+  mydata
+
+RUN apt-get update && apt-get -y install \
+  openssh-server
+RUN mkdir -p /var/run/sshd
+# SSH login fix. Otherwise user is kicked off after login.
+RUN sed -i 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' /etc/pam.d/sshd
+
+RUN mkdir -p ${MYDATA_HOME}/.ssh && chmod 700 ${MYDATA_HOME}/.ssh
+RUN touch ${MYDATA_HOME}/.ssh/authorized_keys && chmod 600 ${MYDATA_HOME}/.ssh/authorized_keys
+RUN chown -R mydata:mydata ${MYDATA_HOME}/.ssh/
+
+RUN mkdir -p "${MYTARDIS_STAGING}" && chown -R mydata:mydata "${MYTARDIS_STAGING}"

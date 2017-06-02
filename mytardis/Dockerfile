@@ -49,6 +49,7 @@ RUN pip install -r ${DOCKYARD_SRVPROJ}/requirements.txt
 # https://github.com/mytardis/mytardis-app-mydata
 COPY $DOCKYARD_SRC/mydata $DOCKYARD_SRVPROJ/tardis/apps/mydata
 RUN pip install -r $DOCKYARD_SRVPROJ/tardis/apps/mydata/requirements.txt
+ENV MYTARDIS_DEFAULT_RECEIVING_DIR=${DOCKYARD_SRVPROJ}/var/staging
 
 # Bioformats
 # https://github.com/keithschulze/mytardisbf

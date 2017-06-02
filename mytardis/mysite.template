@@ -8,7 +8,7 @@ server {
     tcp_nopush on;
 
     root /srv;
-    autoindex on;
+    autoindex off;
   }
 }
 

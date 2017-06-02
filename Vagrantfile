@@ -63,6 +63,8 @@ Vagrant.configure(2) do |config|
     docker.vm.hostname = "docker.#{dir_basename}.#{hostname}"
     # Django standard port
     docker.vm.network "forwarded_port", guest: 8000, host: 8000
+    docker.vm.network "forwarded_port", guest: 80, host: 8080
+    docker.vm.network "forwarded_port", guest: 443, host: 8443
     docker.vm.network "private_network", ip: "192.168.33.11", auto_config: false
     docker.vm.provision "network", type: "shell", inline: <<SCRIPT
 echo "192.168.33.10 accel" >> /etc/hosts

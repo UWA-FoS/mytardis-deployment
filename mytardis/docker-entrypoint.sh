@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+log_level=${GUNICORN_LOG_LEVEL:-'info'}
+worker_class=${GUNICORN_WORKER_CLASS:-'sync'}
+workers=${GUNICORN_WORKERS:-$(( 2 * $(nproc --all) ))}
+
 # Ensure database is ready to accept a connection
 echo "About to try db..."
 while ! nc -z db 5432; do
@@ -46,8 +50,8 @@ echo Starting Gunicorn.
 exec gunicorn wsgi:application \
   --name django \
   --bind 0.0.0.0:8000 \
-  --workers 3 \
-  --log-level=info \
+  --worker-class $worker_class --workers $workers \
+  --log-level $log_level \
   --log-file=/srv/logs/gunicorn.log \
   --access-logfile=/srv/logs/access.log \
   "$@"

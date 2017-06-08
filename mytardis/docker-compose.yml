@@ -23,7 +23,7 @@ services:
       - store:/srv/mytardis/var/store/
     ports:
       - "8000:8000"
-    command: --forwarded-allow-ips="*" --log-level=debug
+    command: --forwarded-allow-ips="*"
     links:
       - db
       - rabbit
@@ -33,6 +33,8 @@ services:
       - MYTARDIS_STATIC=/srv/mytardis/static/
       - MYTARDIS_TIME_ZONE=Australia/Perth
       - MYTARDIS_ENABLE_FILTER_BIOFORMATS='True'
+      - GUNICORN_LOG_LEVEL=debug
+      - GUNICORN_WORKER_CLASS=gevent
     env_file:
       - env.mytardis_secret_key
       - env.mytardis_email

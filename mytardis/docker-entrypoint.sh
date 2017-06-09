@@ -40,11 +40,6 @@ fi
 echo 'python mytardis.py loaddata tardis/apps/mydata/fixtures/default_experiment_schema.json'
 python mytardis.py loaddata tardis/apps/mydata/fixtures/default_experiment_schema.json
 
-# Prepare log files and start outputting logs to stdout
-touch /srv/logs/gunicorn.log
-touch /srv/logs/access.log
-tail -n 0 -f /srv/logs/*.log &
-
 # Start Gunicorn processes
 echo Starting Gunicorn.
 exec gunicorn wsgi:application \
@@ -52,6 +47,6 @@ exec gunicorn wsgi:application \
   --bind 0.0.0.0:8000 \
   --worker-class $worker_class --workers $workers \
   --log-level $log_level \
-  --log-file=/srv/logs/gunicorn.log \
-  --access-logfile=/srv/logs/access.log \
+  --error-logfile - \
+  --access-logfile - \
   "$@"

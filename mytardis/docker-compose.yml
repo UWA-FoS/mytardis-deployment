@@ -28,6 +28,8 @@ services:
       - db
       - rabbit
     environment:
+      - DJANGO_DEBUG='True'
+      - DJANGO_LOGGING_LEVEL=DEBUG
       - MYTARDIS_ALLOWED_HOSTS='*'
       - MYTARDIS_STORAGE_BASE_DIR=/srv/mytardis/var/store
       - MYTARDIS_STATIC=/srv/mytardis/static/
@@ -70,6 +72,7 @@ services:
       - db
       - rabbit
     environment:
+      - DJANGO_DEBUG='False'
       - MYTARDIS_ALLOWED_HOSTS='*'
       - MYTARDIS_STORAGE_BASE_DIR=/srv/mytardis/var/store
       - MYTARDIS_STATIC=/srv/mytardis/static/

@@ -1,8 +1,25 @@
 import os
+import sys
 from default_settings import *
 
 # Turn on Django debug mode
-DEBUG = os.getenv('DJANGO_DEBUG', 'True')
+DEBUG = os.getenv('DJANGO_DEBUG', 'False')
+
+# Logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'stream': sys.stdout,
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': os.getenv('DJANGO_LOGGING_LEVEL', 'INFO'),
+    },
+}
 
 # Global Defaults
 SITE_TITLE = os.getenv('MYTARDIS_SITE_TITLE', 'MyTardis @UWA')
